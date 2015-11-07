@@ -12,7 +12,7 @@ class UIViewController_SideMenu: UIViewController {
     
     var sideMenuViewController:SideMenu?{
         get{
-            println("getter of SideMenu")
+            print("getter of SideMenu")
             var viewController = self.parentViewController
             while viewController != nil {
                 if viewController!.isKindOfClass(SideMenu)

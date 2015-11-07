@@ -39,7 +39,7 @@ class SideMenu: UIViewController {
     var isScaleMenuView:Bool = true
     var menuViewControllerTransformation:CGAffineTransform = CGAffineTransformMakeScale(1.5, 1.5)
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
     }
@@ -73,7 +73,7 @@ class SideMenu: UIViewController {
         //(メニューから戻る際の)コンテントビューのタッチボタンをビューに追加
         if self.contentButton?.superview == nil{
             self.contentButton?.frame = self.contentViewContainer!.bounds
-            self.contentButton!.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
+            self.contentButton!.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
             self.contentViewContainer?.addSubview(self.contentButton!)
         }
         //アニメーション
@@ -118,7 +118,7 @@ class SideMenu: UIViewController {
         //(メニューから戻る際の)コンテントビューのタッチボタンを外す
         self.contentButton?.removeFromSuperview()
         //アニメーションクロージャ
-        var animationBlock: () -> () = {[weak self] in
+        let animationBlock: () -> () = {[weak self] in
             self!.contentViewContainer!.transform = CGAffineTransformIdentity
             self!.contentViewContainer!.frame = self!.view.bounds
             if self!.isScaleMenuView{
@@ -128,7 +128,7 @@ class SideMenu: UIViewController {
             self!.contentViewContainer!.alpha = 1
             
         }
-        var completionBlock: () -> () = {[weak self] in
+        let completionBlock: () -> () = {[weak self] in
             //メニュー非表示完了を通知
             self?.menuViewController!.endAppearanceTransition()
             //メニュー非表示完了メソッドを通知
@@ -182,17 +182,17 @@ class SideMenu: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        println("ViewDidLoad")
+        print("ViewDidLoad")
         //全体ビューの幅と高さを自動調整
-        self.view.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
+        self.view.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
         //背景イメージビューの設定
-        var imageView:UIImageView = UIImageView(frame: self.view.bounds)
+        let imageView:UIImageView = UIImageView(frame: self.view.bounds)
         imageView.image = self.backGroundImage
         imageView.contentMode = UIViewContentMode.ScaleAspectFill
-        imageView.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
+        imageView.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
         self.backGroundImageView = imageView
         //(メニューから戻る際の)コンテントビューのタッチボタンを作成
-        var button:UIButton = UIButton(frame: CGRectNull)
+        let button:UIButton = UIButton(frame: CGRectNull)
         button.addTarget(self, action: "hideMenuViewController", forControlEvents: UIControlEvents.TouchUpInside)
         self.contentButton = button
         //コンテント・メニューコンテナ・背景イメージビューの追加
@@ -201,18 +201,18 @@ class SideMenu: UIViewController {
         self.view.addSubview(self.contentViewContainer!)
         //メニューコンテナの設定
         self.menuViewContainer?.frame = self.view.bounds
-        self.menuViewContainer?.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
+        self.menuViewContainer?.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
         self.addChildViewController(menuViewController!)
         self.menuViewController!.view.frame = self.view.bounds
-        self.menuViewController!.view.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
+        self.menuViewController!.view.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
         self.menuViewContainer?.addSubview(self.menuViewController!.view)
         self.menuViewController!.didMoveToParentViewController(self)
         //コンテントコンテナの設定
         self.contentViewContainer?.frame = self.view.bounds
-        self.contentViewContainer?.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
+        self.contentViewContainer?.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
         self.addChildViewController(contentViewController!)
         self.contentViewController!.view.frame = self.view.bounds
-        self.contentViewController!.view.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
+        self.contentViewController!.view.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
         self.contentViewContainer?.addSubview(self.contentViewController!.view)
         self.contentViewController!.didMoveToParentViewController(self)
         //画面遷移前の状態設定

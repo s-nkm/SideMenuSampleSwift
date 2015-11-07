@@ -17,20 +17,17 @@ class SideMenuViewController: UIViewController_SideMenu,UITableViewDelegate,UITa
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-        
         tableView = UITableView(frame:
             CGRectMake(0,
             (self.view.frame.size.height - 54*3)/2,
-            self.view.frame.size.width,
+            self.view.frame.size.width-10,
             54*3))
-        tableView!.autoresizingMask = UIViewAutoresizing.FlexibleTopMargin |
-            UIViewAutoresizing.FlexibleBottomMargin |
-            UIViewAutoresizing.FlexibleWidth
+        tableView!.autoresizingMask = [UIViewAutoresizing.FlexibleTopMargin, UIViewAutoresizing.FlexibleBottomMargin, UIViewAutoresizing.FlexibleWidth]
         tableView!.delegate = self
         tableView!.dataSource = self
         tableView!.backgroundColor = UIColor.clearColor()
         tableView!.backgroundView = nil
+        tableView!.scrollEnabled = false
         tableView!.separatorStyle = UITableViewCellSeparatorStyle.None
         self.view.addSubview(tableView!)
     }
@@ -38,11 +35,11 @@ class SideMenuViewController: UIViewController_SideMenu,UITableViewDelegate,UITa
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch indexPath.row {
         case 0:
-            var  viewController = UINavigationController(rootViewController: self.storyboard?.instantiateViewControllerWithIdentifier("firstViewController") as! UIViewController)
+            let  viewController = UINavigationController(rootViewController: (self.storyboard?.instantiateViewControllerWithIdentifier("firstViewController"))! as UIViewController)
             self.sideMenuViewController!.setContentViewController(viewController, animated: true)
             self.sideMenuViewController?.hideMenuViewController()
         case 1:
-            var  viewController = UINavigationController(rootViewController: self.storyboard?.instantiateViewControllerWithIdentifier("secondViewController") as! UIViewController)
+            let  viewController = UINavigationController(rootViewController: (self.storyboard?.instantiateViewControllerWithIdentifier("secondViewController"))! as UIViewController)
             self.sideMenuViewController!.setContentViewController(viewController, animated: true)
             self.sideMenuViewController?.hideMenuViewController()
         default:
@@ -65,17 +62,19 @@ class SideMenuViewController: UIViewController_SideMenu,UITableViewDelegate,UITa
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("Cell") as? UITableViewCell
-        if cell == nil {
-            cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
-            cell!.backgroundColor = UIColor.clearColor()
-            cell!.selectedBackgroundView = UIView()
-            cell!.textLabel!.textColor = UIColor.whiteColor()
-            cell!.textLabel!.font = UIFont(name: "Hiragino Kaku Gothic ProN", size: 18)
-        }
-        cell?.textLabel?.text = titleCell[indexPath.row]
+        var cell = UITableViewCell()
+        
+        cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
+        cell.backgroundColor = UIColor.clearColor()
+        cell.selectedBackgroundView = UIView()
+        cell.textLabel!.textColor = UIColor.whiteColor()
+        cell.textLabel!.font = UIFont(name: "Hiragino Kaku Gothic ProN", size: 18)
+        
+        cell.textLabel?.text = titleCell[indexPath.row]
         //cell?.imageView?.image = UIImage(named: imageCell[indexPath.row])
-        return cell!
+        
+        return cell
+        
     }
     
     override func didReceiveMemoryWarning() {

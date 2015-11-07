@@ -11,8 +11,8 @@ import UIKit
 class RootViewController: SideMenu,SideMenuDelegate{
     
     override func awakeFromNib() {
-        self.contentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("contentViewController") as? UIViewController
-        self.menuViewController = self.storyboard?.instantiateViewControllerWithIdentifier("menuViewController") as? UIViewController
+        self.contentViewController = (self.storyboard?.instantiateViewControllerWithIdentifier("contentViewController"))! as UIViewController
+        self.menuViewController = (self.storyboard?.instantiateViewControllerWithIdentifier("menuViewController"))! as UIViewController
         self.backGroundImage = UIImage(named: "background")
         self.delegate = self
     }
@@ -22,19 +22,19 @@ class RootViewController: SideMenu,SideMenuDelegate{
     }
     
     func willShowMenuViewController(sideMenu: SideMenu, contentViewController: UIViewController) {
-        println("willShowMenuViewController")
+        print("willShowMenuViewController")
     }
     
     func didShowMenuViewController(sideMenu: SideMenu, contentViewController: UIViewController) {
-        println("didShowMenuViewController")
+        print("didShowMenuViewController")
     }
     
     func willHideMenuViewController(sideMenu: SideMenu, contentViewController: UIViewController) {
-        println("willHideMenuViewController")
+        print("willHideMenuViewController")
     }
     
     func didHideMenuViewController(sideMenu: SideMenu, contentViewController: UIViewController) {
-        println("didHideMenuViewController")
+        print("didHideMenuViewController")
     }
     
     override func didReceiveMemoryWarning() {
